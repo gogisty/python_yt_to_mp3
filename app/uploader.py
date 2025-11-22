@@ -94,7 +94,6 @@ def get_folder_id(service, folder_path: str) -> Optional[str]:
     return parent_id
 
 # Backwards-compatible helper to debug folder path resolution
-
 def debug_resolve_folder_path(path: str):
     service = get_service()
     fid = get_folder_id(service, path)
