@@ -74,6 +74,7 @@ def list_root_folders() -> List[dict]:
             pageSize=1000,
             includeItemsFromAllDrives=True,
             supportsAllDrives=True,
+            pageToken=page_token,
         ).execute()
         folders.extend(resp.get("files", []))
         page_token = resp.get("nextPageToken")
