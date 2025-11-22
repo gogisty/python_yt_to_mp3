@@ -14,7 +14,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     audio_file = download_youtube_audio_as_mp3(args.link)
-    output_directory = os.path.dirname(audio_file)   
+    output_directory = os.path.dirname(audio_file)
  
     if args.summary_format:
         transcribe_whisper(output_directory, audio_file, args.summary_format)
