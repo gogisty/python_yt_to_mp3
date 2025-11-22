@@ -1,7 +1,7 @@
 import os
 from app.download_yt import download_youtube_audio_as_mp3
 from app.mp3_to_transcribe import transcribe_whisper
-from app.uploader import get_credentials, get_folder_id, upload_mp3_to_drive, get_service
+from app.uploader import get_folder_id, upload_mp3_to_drive, get_service
 
 if __name__ == "__main__":
     import argparse
