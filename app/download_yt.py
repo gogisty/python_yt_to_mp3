@@ -1,8 +1,6 @@
 import os
 import yt_dlp
 from yt_dlp.utils import DownloadError
-
-
 import shutil
 
 def _check_ffmpeg():
@@ -19,6 +17,11 @@ def _prepare_and_return_path(ydl, info_dict):
         return mp3_path
     return file_path
 
+def _download_with_options(link, options):
+    """Helper method to download video with specific options."""
+    with yt_dlp.YoutubeDL(options) as ydl:
+        info_dict = ydl.extract_info(link, download=True)
+        return _prepare_and_return_path(ydl, info_dict)
 
 def download_youtube_audio_as_mp3(youtube_link):
     _check_ffmpeg()
@@ -39,10 +42,7 @@ def download_youtube_audio_as_mp3(youtube_link):
     }
 
     try:
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([youtube_link])
-            info_dict = ydl.extract_info(youtube_link, download=False)
-            return _prepare_and_return_path(ydl, info_dict)
+        return _download_with_options(youtube_link, ydl_opts)
     except DownloadError as e:
         print("\n" + "="*60)
         print("PRIMARY DOWNLOAD FAILED (MP3 Conversion)")
@@ -71,10 +71,7 @@ def download_youtube_audio_as_mp3(youtube_link):
             'verbose': True
         }
         try:
-            with yt_dlp.YoutubeDL(fallback_opts) as ydl:
-                ydl.download([youtube_link])
-                info_dict = ydl.extract_info(youtube_link, download=False)
-                return _prepare_and_return_path(ydl, info_dict)
+            return _download_with_options(youtube_link, fallback_opts)
         except Exception as e2:
             print("Fallback download also failed:\n", e2)
             raise

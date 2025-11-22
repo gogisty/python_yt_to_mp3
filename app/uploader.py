@@ -1,6 +1,6 @@
 import os
 import os.path
-from typing import Optional
+from typing import Optional, List
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -80,9 +80,7 @@ def get_folder_id(service, folder_path: str) -> Optional[str]:
             resp = service.files().list(
                 q=query,
                 fields="files(id, name)",
-                pageSize=10,
-                includeItemsFromAllDrives=True,
-                supportsAllDrives=True,
+                pageSize=10
             ).execute()
         except HttpError as e:
             print(f"Error searching for '{part}': {e}")
