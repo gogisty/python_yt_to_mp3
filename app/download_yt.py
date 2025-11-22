@@ -37,7 +37,7 @@ def download_youtube_audio_as_mp3(youtube_link):
         print("Primary download failed:\n", e)
         # Try to print available formats to help debugging
         try:
-            with yt_dlp.YoutubeDL({'listformats': True, 'quiet': True}) as ydl:
+            with yt_dlp.YoutubeDL({'quiet': True}) as ydl:
                 info = ydl.extract_info(youtube_link, download=False)
                 formats = info.get('formats', [])
                 print(f"Available formats ({len(formats)}):")
