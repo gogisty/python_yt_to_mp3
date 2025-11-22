@@ -31,4 +31,8 @@ if __name__ == "__main__":
         if folder_id is None:
             print(f"Drive folder not found: {args.drive_folder}")
         else:
-            upload_mp3_to_drive(audio_file, folder_id)
+            file_id = upload_mp3_to_drive(audio_file, folder_id)
+            if file_id:
+                print(f"Upload successful. File ID: {file_id}")
+            else:
+                print("Upload failed.")
