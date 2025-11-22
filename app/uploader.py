@@ -61,32 +61,6 @@ def upload_mp3_to_drive(file_path: str, folder_id: str) -> Optional[str]:
         print(f"Upload failed: {e}")
         return None
 
-def list_root_folders() -> List[dict]:
-    """List all folders directly under the user's root (My Drive)."""
-    service = get_service()
-    query = "'root' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false"
-    folders: List[dict] = []
-    page_token = None
-    while True:
-        resp = service.files().list(
-            q=query,
-            fields="nextPageToken, files(id, name, parents)",
-            pageSize=1000,
-            includeItemsFromAllDrives=True,
-            supportsAllDrives=True,
-        ).execute()
-        folders.extend(resp.get("files", []))
-        page_token = resp.get("nextPageToken")
-        if not page_token:
-            break
-    if not folders:
-        print("No folders found in root.")
-    else:
-        print("Root folders:")
-        for f in folders:
-            print(f"{f['name']} ({f['id']})")
-    return folders
-
 def get_folder_id(service, folder_path: str) -> Optional[str]:
     """Resolve a nested folder path (e.g. 'Books/Audio') to its folder ID.
     Returns None if any component is missing.

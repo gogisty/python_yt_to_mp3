@@ -1,6 +1,6 @@
 import os
 from app.download_yt import download_youtube_audio_as_mp3
-from app.mp3_to_transcribe import transcribe_wisper
+from app.mp3_to_transcribe import transcribe_whisper
 from app.uploader import get_credentials, get_folder_id, upload_mp3_to_drive
 from googleapiclient.discovery import build
 
@@ -18,7 +18,7 @@ if __name__ == "__main__":
     output_directory = os.path.dirname(audio_file)
 
     if args.summary_format:
-        transcribe_wisper(output_directory, audio_file, args.summary_format)
+        transcribe_whisper(output_directory, audio_file, args.summary_format)
         print(f"Transcription and summary saved in {output_directory}")
     else:
         print(f"MP3 file saved at {audio_file}")
