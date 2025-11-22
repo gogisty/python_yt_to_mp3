@@ -23,7 +23,7 @@ if __name__ == "__main__":
         print(f"MP3 file saved at {audio_file}")
 
     # 3. Optionally upload to drive folder "MyDrive/Books/Audio"
-    # if audio file is not mp3 skip uploading event if upload_drive is enabled
+    # if audio file is not mp3 skip uploading even if upload_drive is enabled
     if not audio_file.endswith(".mp3"):
         print(f"Audio file is not mp3: {audio_file} - skipping upload")
         exit()
