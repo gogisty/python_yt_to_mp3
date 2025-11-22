@@ -7,7 +7,7 @@ def summarize_text(text):
     summary_text = summarizer(text, min_length=5, max_length=200)[0]['summary_text']
     return summary_text
 
-def transcribe_wisper(output_directory, path_to_audio_file, summary_format):
+def transcribe_whisper(output_directory, path_to_audio_file, summary_format):
     model = whisper.load_model("base")
     result = model.transcribe(path_to_audio_file, verbose=True)
     transcription_text = result["text"]
