@@ -35,7 +35,7 @@ Before you begin, ensure you have the following installed:
 
 2.  Install the required Python packages:
     ```bash
-    pip install yt-dlp openai-whisper transformers google-auth google-auth-oauthlib google-api-python-client torch
+    pip install -r requirements.txt
     ```
     *(Note: `torch` is required for Whisper and Transformers. Please refer to [PyTorch's website](https://pytorch.org/get-started/locally/) for the specific installation command for your system if the default pip install doesn't work.)*
 
