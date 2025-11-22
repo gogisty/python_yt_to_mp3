@@ -9,7 +9,7 @@ from googleapiclient.http import MediaFileUpload
 from googleapiclient.errors import HttpError
 
 # Use full Drive scope (matches reference example) so listing/nested search works reliably
-SCOPES = ["https://www.googleapis.com/auth/drive"]
+SCOPES = ["https://www.googleapis.com/auth/drive.file"]
 CREDENTIALS_FILE = "credentials.json"
 TOKEN_FILE = "token.json"
 
