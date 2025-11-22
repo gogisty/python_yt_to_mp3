@@ -1,8 +1,7 @@
 import os
 from app.download_yt import download_youtube_audio_as_mp3
 from app.mp3_to_transcribe import transcribe_whisper
-from app.uploader import get_credentials, get_folder_id, upload_mp3_to_drive
-from googleapiclient.discovery import build
+from app.uploader import get_credentials, get_folder_id, upload_mp3_to_drive, get_service
 
 if __name__ == "__main__":
     import argparse
@@ -15,9 +14,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     audio_file = download_youtube_audio_as_mp3(args.link)
-    output_directory = os.path.dirname(audio_file)
-
-    
+    output_directory = os.path.dirname(audio_file)   
  
     if args.summary_format:
         transcribe_whisper(output_directory, audio_file, args.summary_format)
@@ -32,9 +29,7 @@ if __name__ == "__main__":
         exit()
 
     if args.upload_drive:
-        creds = get_credentials()
-        service = build("drive", "v3", credentials=creds)
-        folder_id = get_folder_id(service, args.drive_folder)
+        folder_id = get_folder_id(get_service(), args.drive_folder)
         if folder_id is None:
             print(f"Drive folder not found: {args.drive_folder}")
         else:
