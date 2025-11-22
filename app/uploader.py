@@ -55,7 +55,6 @@ def upload_mp3_to_drive(file_path: str, folder_id: str) -> Optional[str]:
             if status:
                 # Simple progress percentage
                 print(f"Upload progress: {int(status.progress() * 100)}%")
-        print(f"Uploaded file ID: {response.get('id')}")
         return response.get("id")
     except HttpError as e:
         print(f"Upload failed: {e}")
