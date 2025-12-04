@@ -94,6 +94,7 @@ def test_e2e_flow():
                 os.rmdir(parent_dir)
                 print(f"   Deleted empty directory: {parent_dir}")
         except OSError:
+            # It's okay if the directory cannot be removed (e.g., not empty or already deleted).
             pass
     else:
         print("   Local file not found (already deleted?)")
