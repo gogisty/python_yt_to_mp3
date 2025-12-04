@@ -83,7 +83,7 @@ class TestEndToEnd(unittest.TestCase):
         print("3. Verifying upload...")
         try:
             file_meta = self.service.files().get(fileId=file_id).execute()
-            self.assertEqual(file_meta.get('id'), file_id)
+            self.assertEqual(file_meta.get('name'), os.path.basename(mp3_path), f"Uploaded file name mismatch: expected '{os.path.basename(mp3_path)}', got '{file_meta.get('name')}'")
             print(f"   Verification successful: Found file '{file_meta.get('name')}' (ID: {file_meta.get('id')})")
         except Exception as e:
             self.fail(f"Verification failed: {e}")
