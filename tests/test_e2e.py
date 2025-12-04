@@ -9,6 +9,19 @@ from app.download_yt import download_youtube_audio_as_mp3
 from app.uploader import upload_mp3_to_drive, get_service, get_folder_id
 
 def test_e2e_flow():
+    """End-to-end test for YouTube download and Google Drive upload workflow.
+
+    Tests the complete flow:
+    1. Downloads a short YouTube video as MP3
+    2. Uploads the MP3 to Google Drive folder 'Books/Audio'
+    3. Verifies the upload succeeded
+    4. Cleans up both Drive and local files
+
+    Prerequisites:
+    - Valid Google Drive credentials (credentials.json)
+    - Network access to YouTube and Google Drive APIs
+    - FFmpeg installed for audio conversion
+    """
     print("Starting End-to-End Test...")
     
     # 1. Download short video
