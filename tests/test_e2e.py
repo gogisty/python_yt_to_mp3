@@ -37,6 +37,7 @@ class TestEndToEnd(unittest.TestCase):
                     if not os.listdir(parent_dir):
                         os.rmdir(parent_dir)
                 except OSError:
+                    # Ignore errors during cleanup (e.g., directory not empty or not removable)
                     pass
 
     def test_download_and_upload_flow(self):
