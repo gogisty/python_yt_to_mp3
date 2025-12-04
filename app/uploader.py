@@ -8,7 +8,6 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 from googleapiclient.errors import HttpError
 
-# Use full Drive scope (matches reference example) so listing/nested search works reliably
 # Use full Drive scope to allow access to all files, including those not created by this app.
 # This is necessary to find and upload to existing folders (like 'Books/Audio') that the user
 # created manually or with other tools.
