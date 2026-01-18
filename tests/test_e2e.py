@@ -18,13 +18,14 @@ class TestEndToEnd(unittest.TestCase):
 
     def tearDown(self):
         """Tear down test fixtures, cleaning up local and remote files."""
-        # Cleanup Drive files
-        for file_id in self.drive_files:
-            try:
-                print(f"Cleaning up Drive file: {file_id}")
-                self.service.files().delete(fileId=file_id).execute()
-            except Exception as e:
-                print(f"Error deleting Drive file {file_id}: {e}")
+        # Cleanup Drive files (only if service was initialized)
+        if hasattr(self, "service"):
+            for file_id in self.drive_files:
+                try:
+                    print(f"Cleaning up Drive file: {file_id}")
+                    self.service.files().delete(fileId=file_id).execute()
+                except Exception as e:
+                    print(f"Error deleting Drive file {file_id}: {e}")
 
         # Cleanup local files
         for file_path in self.downloaded_files:
