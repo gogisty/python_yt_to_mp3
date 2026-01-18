@@ -35,6 +35,8 @@ def get_credentials():
                     if os.path.exists(TOKEN_FILE):
                         os.remove(TOKEN_FILE)
                 except OSError:
+                    # Best-effort cleanup: if we can't remove the old token file,
+                    # continue anyway and rely on the new auth flow to provide fresh credentials.
                     pass
                 flow = InstalledAppFlow.from_client_secrets_file(CREDENTIALS_FILE, SCOPES)
                 creds = flow.run_local_server(port=0)
