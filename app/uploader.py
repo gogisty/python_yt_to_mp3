@@ -3,13 +3,17 @@ import os.path
 from typing import Optional
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
+from google.auth.exceptions import RefreshError
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 from googleapiclient.errors import HttpError
 
-# Use full Drive scope (matches reference example) so listing/nested search works reliably
-SCOPES = ["https://www.googleapis.com/auth/drive.file"]
+# Use full Drive scope to allow access to all files, including those not created by this app.
+# This is necessary to find and upload to existing folders (like 'Books/Audio') that the user
+# created manually or with other tools.
+# WARNING: This grants full access to the user's Drive.
+SCOPES = ["https://www.googleapis.com/auth/drive"]
 CREDENTIALS_FILE = "credentials.json"
 TOKEN_FILE = "token.json"
 
@@ -22,7 +26,20 @@ def get_credentials():
         creds = Credentials.from_authorized_user_file(TOKEN_FILE, SCOPES)
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
+            try:
+                creds.refresh(Request())
+            except RefreshError as e:
+                print(f"Credential refresh failed: {e}. Re-running auth flow.")
+                # Remove possibly-broken token file so we can obtain a fresh one
+                try:
+                    if os.path.exists(TOKEN_FILE):
+                        os.remove(TOKEN_FILE)
+                except OSError:
+                    # Best-effort cleanup: if we can't remove the old token file,
+                    # continue anyway and rely on the new auth flow to provide fresh credentials.
+                    pass
+                flow = InstalledAppFlow.from_client_secrets_file(CREDENTIALS_FILE, SCOPES)
+                creds = flow.run_local_server(port=0)
         else:
             flow = InstalledAppFlow.from_client_secrets_file(CREDENTIALS_FILE, SCOPES)
             # Run local server OAuth flow
